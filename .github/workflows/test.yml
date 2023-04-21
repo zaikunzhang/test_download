@@ -1,6 +1,7 @@
 name: Test download
 
 on:
+  push:
   schedule:
     - cron: '0 */6 * * *'
   # Trigger the workflow manually
@@ -11,7 +12,11 @@ jobs:
 
   test:
     name: Test download
-    runs-on: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - name: Checkout repository
