@@ -1,0 +1,32 @@
+name: Test download
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  # Trigger the workflow manually
+  workflow_dispatch:
+
+
+jobs:
+
+  test:
+    name: Test download
+    runs-on: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.5.2
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY_ACT }} # This forces checkout to use SSH, not HTTPS
+
+      - name: Try downloading
+        shell: bash
+        run: |
+          # PRIMA
+          wget https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/389eb123-4568-4fee-a61b-1d3d4977736f/0598170f-6158-4254-927e-43e8bd613867/packages/zip
+          # PDFO
+          wget https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/feb6a5a3-db14-4dd2-abe5-3ce2fc059acc/ed5a04f1-9fe5-4ed4-a396-a584de167a65/packages/zip
+          # MatCUTEst
+          wget https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/7477c486-c83c-4775-9943-633c58e2114c/f9ec6595-3f9f-4cfd-8069-465f92918e9a/packages/zip
+          # setup_mex
+          wget https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/bdd0cda9-7038-4547-8ec6-a832446a9324/a55f8001-e7ec-4ac1-bc68-c8de6baa1a22/packages/zip
